@@ -190,7 +190,7 @@ sudo systemctl start docker
 
 ## 2. Clone the Repository
 
-git clone https://github.com/j-zulick/dify.ai-content-automation.git
+git clone https://github.com/j-zulick/content-reviewer-updater.git
 
 cd dify.ai-content-automation
 
