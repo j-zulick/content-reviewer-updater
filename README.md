@@ -3,13 +3,6 @@
 
 The Content Reviewer workflow analyzes any provided article, identifies issues, and returns only what must be changed—matching DealNews editorial standards. It is ideal for automated quality checks, SEO alignment, tone correction, and factual cleanup.
 
-**[Workflows](#-workflow-system-dify-workflows) · [Content Reviewer](#-content-reviewer-workflow) · [Docker Setup](#-docker-hosting-setup) · [Install Guide](#full-installation-guide-dify-workflows--docker-hosting)**
-
-![Docker](https://img.shields.io/badge/Docker-Ready-blue)
-![Dify](https://img.shields.io/badge/Dify-Workflows-green)
-![Automation](https://img.shields.io/badge/Content-Automation-orange)
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-
 
 ### 🚀 Key Capabilities
 
