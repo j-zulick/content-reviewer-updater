@@ -1,0 +1,837 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Content Reviewer
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.3
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: llm
+      id: 1732307467815-source-1732307494825-target
+      selected: false
+      source: '1732307467815'
+      sourceHandle: source
+      target: '1732307494825'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732307494825-source-1732307839900-target
+      selected: false
+      source: '1732307494825'
+      sourceHandle: source
+      target: '1732307839900'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732307839900-source-1732308051651-target
+      selected: false
+      source: '1732307839900'
+      sourceHandle: source
+      target: '1732308051651'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732308051651-source-1732308092458-target
+      selected: false
+      source: '1732308051651'
+      sourceHandle: source
+      target: '1732308092458'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1732308092458-source-1744559967537-target
+      selected: false
+      source: '1732308092458'
+      sourceHandle: source
+      target: '1744559967537'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1744559967537-source-1744560011512-target
+      selected: false
+      source: '1744559967537'
+      sourceHandle: source
+      target: '1744560011512'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1744560011512-source-1744560056630-target
+      selected: false
+      source: '1744560011512'
+      sourceHandle: source
+      target: '1744560056630'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 1744560056630-source-1744560103943-target
+      selected: false
+      source: '1744560056630'
+      sourceHandle: source
+      target: '1744560103943'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1744560103943-source-1732308197627-target
+      selected: false
+      source: '1744560103943'
+      sourceHandle: source
+      target: '1732308197627'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: content
+          max_length: 4800000
+          options: []
+          required: true
+          type: paragraph
+          variable: content
+        - label: tasks
+          max_length: 4800
+          options: []
+          required: false
+          type: paragraph
+          variable: tasks
+      height: 116
+      id: '1732307467815'
+      position:
+        x: 77.24891636372053
+        y: -160.01930866890166
+      positionAbsolute:
+        x: 77.24891636372053
+        y: -160.01930866890166
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: Review the content against the original task to identify areas to improve.
+        model:
+          completion_params:
+            max_tokens: 4096
+            temperature: 0
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 02947c59-ef0d-422d-9c73-c662883048f8
+          role: system
+          text: 'You are a content manager that is reviewing draft content for DealNews.com.
+            You will be provided with the draft content and your job is to highlight
+            where in the draft content any issues might exist without making changes.
+
+
+            ## CRITICAL Instructions:
+
+            - Ensure the internal links in the content draft are left in and do not
+            get taken out. If the internal links are not added into the paragraph
+            body content, add them.
+
+            - Do not add internal links specified in the content outline tasks to
+            the bottom of the content draft. Ensure that internal links are included
+            within the body paragraph content using relevant anchor text.
+
+            - Do not add internal links to pages that the content outline instructs
+            the writer to reference unless they are designated internal pages on DealNews.com
+            or the vendor/company''s primary site. For example, if writing content
+            around ''Peacock Black Friday'', only include internal links to designated
+            DealNews.com relevant pages or relevant pages on [Peacock''s website](https://peacocktv.com/).
+
+            - Do not provide broad guidance to review the content without using specific
+            references or confirming there is a problem.
+
+            - Any areas you identify should be specific with a reference to which
+            section the issue exists within.
+
+            - Only review content that was added into this workflow; do NOT output
+            any other content.
+
+            - After identifying the tasks, segment the criteria that have not been
+            met into a separate section titled "Criteria Not Met To Address". In this
+            section, list the tasks that require attention and provide specific references
+            to the issues within the draft content.
+
+
+            The next step is to review the formatting instructions and to generate
+            a list of tasks in markdown format, beginning with a section separator,
+            then "#TaskReview", then providing an organized list of tasks for the
+            content writer to review and adjust. If the task is empty, output the
+            task criteria has been met.
+
+
+            ## Review Criticality
+
+            You are given a criticality level when reviewing of High, Medium, or Low.
+
+            - High: Provide feedback on any areas that could improve.
+
+            - Medium: If the criteria is met but could be improved slightly, ignore
+            and don''t provide any feedback about it.
+
+            - Low: If the criteria is met at all from the task, consider it met and
+            do not provide any feedback about it. When reviewing for link inclusion,
+            make sure to look within HTML href attributes and do not worry about any
+            additional query string parameters.'
+        - id: 119c3093-a5a1-4d7a-aae1-bbcab40f7a6f
+          role: user
+          text: "Review the following task with Criticality=Low. If the contents of\
+            \ the task are empty, assume that the task criteria has been met. \n```\n\
+            {{#1732307467815.tasks#}}\n```\n\nReview the draft content contained within\
+            \ the markdown fence below and list out any criteria defined in the task\
+            \ that is not yet met.\n```\n{{#1732307467815.content#}}\n```"
+        selected: false
+        title: Task Review
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 158
+      id: '1732307494825'
+      position:
+        x: 77.24891636372053
+        y: 6.385441983327951
+      positionAbsolute:
+        x: 77.24891636372053
+        y: 6.385441983327951
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 4096
+            temperature: 0
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 7ea63871-4492-449b-b0ae-98f444d9c667
+          role: system
+          text: "```markdown\nYou are a content reviewer for DealNews.com. Your goal\
+            \ is to review the provided content. When you find a heading of any level\
+            \ that contains content, output the heading, then generate a list of attributes\
+            \ about the contents of that section.\nChecks:\n- sentence_count: count\
+            \ distinct sentences in each paragraph\n- parallel_check: check lists\
+            \ for non-parallel structure\n- previous_paragraph_check: check to make\
+            \ sure any lists aren't covered in a previous paragraph\n- misused_ordered_list:\
+            \ flag ordered lists that are not a list of steps\n- topic_coverage: ensure\
+            \ each paragraph covers a specific topic\n- unordered_list_check: flag\
+            \ unordered lists that are not a list of bullet points\n- html_structure_check:\
+            \ ensure proper use of `<h2>` or `<h3>` HTML tags for FAQs subheads\n\
+            - invalid_html_check: identify any invalid HTML that could break the content\n\
+            - anchor_link_check: ensure all links are represented by an anchor tag\
+            \ with keyword-rich link text and if the link points to dealnews.com it\
+            \ includes an attribute of `vendor=\"35\"` at the end.\nExample:\n```\n\
+            # <h1 heading text>\nparagraph_1:\n- sentence_count: 5\n- lists:\n  -\
+            \ parallel_check: pass\n  - previous_paragraph_check: fail\n  - misused_ordered_list:\
+            \ pass\n- topic_coverage: pass\n## <h2 heading text>\n... (continued)\n\
+            ```\n\n## CRITICAL Instructions:\n- Provide only the output as defined\
+            \ above with highly accurate assessments of each section and paragraph\
+            \ using the checks."
+        - id: 90943da3-51d0-4de6-8fa7-acda42a12a9c
+          role: user
+          text: '{{#1732307467815.content#}}'
+        selected: false
+        title: Formatting Scoring
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732307839900'
+      position:
+        x: 77.24891636372053
+        y: 212.40474587066484
+      positionAbsolute:
+        x: 77.24891636372053
+        y: 212.40474587066484
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 4096
+            temperature: 0
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 1781f52b-b5f8-4c50-8fef-c23903b94442
+          role: system
+          text: "## Formatting\n\n- Ensure no URL is linked to more than one time.\n\
+            \n## Prohibited Outbound Links\n- Ensure there are no outbound links to\
+            \ the following sites:\n  1. https://www.reddit.com/\n  2. https://slickdeals.net/\n\
+            \  3. https://thekrazycouponlady.com/\n  4. https://cbsdeals.com/\n  5.\
+            \ https://www.bradsdeals.com/\n  6. https://clarkdeals.com\n  7. https://blackfriday.com/\n\
+            \n\n## Prohibited Internal Links\n- If any internal links to the prohibited\
+            \ sites above are found within the content, they must be flagged. Ensure\
+            \ no URLs in the content link to these sites or are referenced.\n\n##\
+            \ General Link Checks\n- Ensure no URL is linked to more than one time\
+            \ within the document.\n\n## Text Styling Checks\n- Ensure no styled text\
+            \ is returned and $ are preserved in the content. \n\n## Scoring Guidelines:\n\
+            \n### dates\n- Ensure that the article is highlighting 2024 savings opportunities\
+            \ and not 2023 or previous years. 2023 and previous year info can be included\
+            \ but all articles should refer to 2024 as the year we are currently in.\
+            \ \n\n### sentence_count:\n- Check that there are no paragraphs with more\
+            \ than 8 sentences. If there are, flag them for breaking up.\n  \n###\
+            \ topic_coverage:\n- Ensure each paragraph focuses on a specific topic.\n\
+            \n### parallel_check:\n- Check if the structure of any lists is non-parallel,\
+            \ ensuring consistency within the list structure.\n\n### previous_paragraph_check:\n\
+            - Make sure lists don't duplicate information that has already been covered\
+            \ in a previous paragraph.\n\n### misused_ordered_list:\n- Flag ordered\
+            \ lists if they do not represent a sequence of steps.\n\n### unordered_list_check:\n\
+            - Ensure unordered lists only contain bullet points, features, or similar\
+            \ non-sequential information.\n\n### html_structure_check:\n- Ensure correct\
+            \ use of `<h2>` or `<h3>` HTML tags for FAQ subheads. Do not title <h2>\
+            \ or '<h3>' \"FAQs, 'Offers', 'Content', etc.; Ensure headings concisely\
+            \ summarize the section of the page. \n\n### invalid_html_check:\n- Identify\
+            \ any invalid HTML that could break the content structure or display.\n\
+            \n## Criteria Not Met - Areas To Address:\n- List any specific failures\
+            \ identified during the review process.\n\n## Recommended Changes:\n-\
+            \ Provide specific examples and recommendations for changes in cases where\
+            \ issues were found.\n- Ensure links that appear more than once are consolidated\
+            \ and used appropriately."
+        - id: f1f224b0-9c08-4e41-afdf-3b2d74054ae6
+          role: user
+          text: 'Content
+
+            ```
+
+            {{#1732307467815.content#}}
+
+            ```
+
+            Content Scoring
+
+            ```
+
+            {{#1732307839900.text#}}
+
+            ```'
+        selected: false
+        title: Formatting
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732308051651'
+      position:
+        x: 356.49968001943944
+        y: -28.872450899581537
+      positionAbsolute:
+        x: 356.49968001943944
+        y: -28.872450899581537
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 16384
+            temperature: 0.7
+          mode: chat
+          name: chatgpt-4o-latest
+          provider: openai
+        prompt_template:
+        - id: 5ca7050a-4bd4-4338-9b6a-e86ccb8c628a
+          role: system
+          text: '- Ensure the full HTML document is returned, including all necessary
+            closing tags (e.g., </article>, </body>, </html>). The final output should
+            not omit any part of the HTML structure, even if no changes are needed
+            in those sections.
+
+            - Return only the sections of content where changes are required. Exclude
+            any content or sections that meet the criteria without modification.
+
+            - Perform a quality check to confirm that the HTML structure is intact
+            and complete. The final output should be ready for publication without
+            further adjustments.'
+        - id: 8a35c523-d448-49ce-ac6a-306bd842f5bf
+          role: user
+          text: '{{#1732308051651.text#}}'
+        selected: false
+        title: Formatting Cleaning
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1732308092458'
+      position:
+        x: 356.49968001943944
+        y: 105.9306472781131
+      positionAbsolute:
+        x: 356.49968001943944
+        y: 105.9306472781131
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1732308092458'
+          - text
+          variable: formatting_review
+        - value_selector:
+          - '1744559967537'
+          - text
+          variable: grammar_review
+        - value_selector:
+          - '1744560056630'
+          - text
+          variable: styling_review
+        - value_selector:
+          - '1732307494825'
+          - text
+          variable: task_review
+        selected: false
+        title: End
+        type: end
+      height: 168
+      id: '1732308197627'
+      position:
+        x: 956.7739636927465
+        y: -28.872450899581537
+      positionAbsolute:
+        x: 956.7739636927465
+        y: -28.872450899581537
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 4096
+            temperature: 0
+          mode: chat
+          name: gpt-4o
+          provider: openai
+        prompt_template:
+        - id: 86f667c7-8abe-4bdf-a9dd-d63ee6c36e02
+          role: system
+          text: "You are a content manager that is reviewing draft content for DealNews.com.\
+            \ You will be provided with the draft content and your job is to highlight\
+            \ where in the draft content any issues might exist without making changes.\n\
+            \nYou are reviewing the content that has already been reviewed for its\
+            \ contents (linking (internal and external), and intro/outro), as well\
+            \ as formatting (the structure and size of the paragraphs) so no further\
+            \ comments are needed.\n\n## CRITICAL Instructions:\n- Do not provide\
+            \ broad guidance to review the content without using specific references\
+            \ or confirming there is a problem\n- Any areas you identify should be\
+            \ specific with a reference to which section the issue exists within\n\
+            - When you have multiple tasks generated for a particular guideline, group\
+            \ them under a short description of the guideline to avoid repetition.\n\
+            - Add instances where changes need to be made into individual section\
+            \ at the very bottom of the result in a section titled `Criteria Not Met\
+            \ - Areas To Address`\n- After identifying areas that need changes, provide\
+            \ specific recommendations for each identified issue at the bottom of\
+            \ the response. Ensure these recommendations align with the prompt's instructions\
+            \ and include examples of how to make the changes. Title this section\
+            \ `Recommended Changes'. \n\nThe next step is to review the grammar instructions\
+            \ and to generate a list of tasks in markdown format, beginning with a\
+            \ section separator, then \"#Grammar\", then providing an organized list\
+            \ of tasks for the content writer to review and adjust. \n\n## Review\
+            \ Guidelines\n```\n\n## General Grammar \n1. Ensure the correct subject-verb\
+            \ agreements are in place. If not, provide specific change. - Example:\
+            \ `The list of items are on the desk` should be `The list of items is\
+            \ on the desk.` - Example: `The team have won the game` should be `The\
+            \ team has won the game.`\n2. When `length` and/or `width` is mentioned,\
+            \ do not recommend to include `girth`, `diameter`, `circumference`, `thickness`,\
+            \ etc.  specification or any other form of measurement.\n3. Do not use\
+            \ the words 'Offer' or 'Offers' in headings; Use something more descriptive\
+            \ \n4. Do not use overly-description heading names such as 'Disney Plus\
+            \ Black Friday Deals: Your Ultimate Guide for 2023' , use brief and relevant\
+            \ heading names\n5. Ensure 'DealNews' is spelled correctly and not 'Deal\
+            \ News', 'dealnews' , etc. \n\n## Capitalization\n1. Check if proper nouns,\
+            \ the first word of sentences, and words in headlines or subheads are\
+            \ capitalized.\n2. Identify non-proper nouns that are capitalized incorrectly\
+            \ unless part of a headline or subhead. Specify that these words do not\
+            \ need to be capitalized. If they are, remove the capitalization.\n3.\
+            \ Verify that headings of all tables are capitalized.\n4. Ensure consistency\
+            \ in capitalization but do not capitalize words unnecessarily for consistency\
+            \ alone. For example: `Packages Over 15.999 Ounces and up to 70 Pounds`\
+            \ should be corrected to `Packages over 15.999 Ounces and up to 70 Pounds`\
+            \ to avoid unnecessary capitalization.\n5. For \"4th of July,\" do not\
+            \ replace it with \"Fourth of July.\" Retain the original format \"4th\
+            \ of July\" as provided in the draft content.\n\n\n## Spacing and Punctuation\n\
+            1. Check for double spaces and flag them.\n2. Verify the use of Oxford\
+            \ commas in lists.\n3. Limit the use of exclamation points to match the\
+            \ current article tone.\n4. Ensure proper comma usage; `New Years Eve`\
+            \ should be `New Year's Eve`, `Memorial Day - Monday May 27` should be\
+            \ `Memorial Day - Monday, May 27`\n5. When inserting or editing anchor\
+            \ tags (<a href>), do not automatically place a period or any other punctuation\
+            \ immediately after the link text unless it is required by the sentence\
+            \ structure. Punctuation should only be added after the closing </a> tag\
+            \ if it is part of the original sentence and correctly follows the natural\
+            \ flow of the text. \n5. Always evaluate the sentence structure to determine\
+            \ if punctuation is necessary after the link. If the sentence does not\
+            \ end after the link, do not insert a period or any other punctuation.\n\
+            6. Do not add any spaces if there is no space between a word and the opening\
+            \ <a> tag; Example: `You can also<a href=\"https://www.dealnews.com/mydealnews/alert/create/\"\
+            \ vendor=\"35\"><u>set up a deal alert</u></a>` should not be changed\
+            \ to `You can also <a href=\"https://www.dealnews.com/mydealnews/alert/create/\"\
+            \ vendor=\"35\"><u>set up a deal alert</u></a>.`\n7. Use Straight Apostrophes\
+            \ Only: Ensure that all apostrophes used in the content are straight apostrophes,\
+            \ `'`.Do not use curly or typographic apostrophes `’` under any circumstances.\
+            \ This applies to contractions (e.g., `it's`, `don't`), possessives (`John's\
+            \ book`), and any other instances where an apostrophe is required.\n8.\
+            \ Use spelling 'DealNews', not 'Deal News', 'deal news', 'dealnews' or\
+            \ other variations \n\n## Numerals\n1. Ensure numbers under 10 are spelled\
+            \ out and numerals are used for 10 and above.\n2. Verify the use of numerals\
+            \ for prices, hyphenated terms with numbers, percentages with the percent\
+            \ sign, dates, and specific times of day.\n3.) Use numerals for the following:\
+            \ prices: `$3, $4.99, 5 cents`, hyphenated terms with numbers `6-pack,\
+            \ 2-day shipping`, percentages with the percent sign `50% off, 4.2% increase`,\
+            \ dates `January 1, 2024; March 23`, and specific times of day `5:30 pm,\
+            \ 4 am`. \n\n\n## Hyphens and Em Dashes\n1. Check for appropriate use\
+            \ of em dashes instead of hyphens for clarity and emphasis.\n```\n\nYou\
+            \ will be provided with content. Do not provided any commentary except\
+            \ for what has been requested. Be concise and specific so the tasks you\
+            \ generate are easy to follow."
+        - id: d69abb9a-88a4-48be-9fa9-9d6958090e01
+          role: user
+          text: 'Content
+
+            ```
+
+            {{#1732307467815.content#}}
+
+            ```'
+        selected: false
+        title: Grammar
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1744559967537'
+      position:
+        x: 356.49968001943944
+        y: 218.72507636557185
+      positionAbsolute:
+        x: 356.49968001943944
+        y: 218.72507636557185
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 16384
+            temperature: 0.7
+          mode: chat
+          name: chatgpt-4o-latest
+          provider: openai
+        prompt_template:
+        - id: 92b5695b-f4a3-45aa-b4c1-1f557aab345c
+          role: system
+          text: '- Remove all instances from output where task criteria has been met.
+
+            - Return content without any additional markup or markdown fencing. '
+        - id: 2ac66d5b-1234-4ea2-9775-128090a53947
+          role: user
+          text: '{{#1744559967537.text#}}'
+        selected: false
+        title: GRAMMAR CLEANING
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1744560011512'
+      position:
+        x: 651.0080291291147
+        y: -28.872450899581537
+      positionAbsolute:
+        x: 651.0080291291147
+        y: -28.872450899581537
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 16384
+            temperature: 0.7
+          mode: chat
+          name: chatgpt-4o-latest
+          provider: openai
+        prompt_template:
+        - id: 9a35332e-36f1-4fbd-aef9-ebb95a8a2bb1
+          role: system
+          text: "You are a content manager that is reviewing draft content for DealNews.com.\
+            \ You will be provided with the draft content and your job is to highlight\
+            \ where in the draft content any issues might exist without making changes.\n\
+            \nYou are reviewing the content that has already been reviewed for its\
+            \ contents (linking (internal and external), and intro/outro), as well\
+            \ as formatting (the structure and size of the paragraphs) so no further\
+            \ comments are needed.\n\n## CRITICAL Instructions:\n- Do not provide\
+            \ broad guidance to review the content without using specific references\
+            \ or confirming there is a problem.\n- Any areas you identify should be\
+            \ specific with a reference to which section the issue exists within.\n\
+            - When you have multiple tasks generated for a particular guideline, group\
+            \ them under a short description of the guideline to avoid repetition.\n\
+            - Add instances where changes need to be made into individual section\
+            \ at the very bottom of the result in a section titled `Criteria Not Met\
+            \ - Areas To Address`.\n- Ensure that when suggesting changes or corrections,\
+            \ the LLM only flags content that is genuinely different or requires modification.\
+            \ If the content in question is identical to the original (e.g., `5 days`\
+            \ vs. `5 days`), it should not be flagged as needing correction.\n- After\
+            \ identifying areas that need changes, provide specific recommendations\
+            \ for each identified issue at the bottom of the response. Ensure these\
+            \ recommendations align with the prompt's instructions and include examples\
+            \ of how to make the changes. Title this section `Recommended Changes'.\
+            \ \n\nThe next step is to review the styling instructions and to generate\
+            \ a list of tasks in markdown format, beginning with a section separator,\
+            \ then \"#Styling\", then providing an organized list of tasks for the\
+            \ content writer to review and adjust.\n\n## Review Guidelines\n```\n\
+            ## Voice and Phrasing\n1. Ensure \"FAQs\" is used instead of \"FAQ’s\"\
+            .\n2. Confirm that \"Home Depot\" is used instead of \"The Home Depot\"\
+            .\n3. Avoid using first-person plural pronouns that imply the company\
+            \ is being referred to as a different entity\n  - example of first-person\
+            \ plural pronouns we do not want included in our content would be \"our\"\
+            \ and \"we\"\n  - example of company being referred to as a different\
+            \ entity is \"pick up the TV at any of our locations\"\n4. Use first-person\
+            \ plural pronouns only when speaking as DealNews (e.g., \"Check out our\
+            \ rundown of the hottest Black Friday TV deals\").\n5. Ensure consistent\
+            \ formatting and voice throughout the content.\n6. Use second-person pronouns\
+            \ (you/your/yours) to address the reader directly (e.g., \"Here's what\
+            \ you need to know to get the best discounts on Cyber Monday\").\n7. Avoid\
+            \ varying phrasing or styling for the same terms.\n8. Do not use the following\
+            \ words in h1s, h2s or h3s: offer, offers\n\n## Dates\n1. Use the style\
+            \ \"January 2024\" for month/year references.\n2. Use the style \"January\
+            \ 24, 2024\" for month/day/year references.\n3. Use the style \"Wednesday,\
+            \ January 24, 2024\" for day-of-week/month/day/year references.\n4. Ensure\
+            \ dates in the middle of a sentence follow the format: \"He bought a TV\
+            \ on January 24, 2024, then returned it the following day.\"\n5. Spell\
+            \ out the names of months.\n6. Use only Arabic figures, without \"st,\"\
+            \ \"nd,\" \"rd,\" or \"th\" at the end of the date.\n7. Verify that any\
+            \ dates mentioned are accurate.\n8. Preserve Original Date Granularity:\
+            \ Do Not Add Years to Dates Without Them: If a date in the original content\
+            \ does not include a year, do not add a year under any circumstances.\
+            \ Example:Correct: On October 15, the sale will kick off.Incorrect: On\
+            \ October 15, 2024, the sale will kick off. Retain Existing Years:If the\
+            \ original content mentions a date with a year, retain that year as it\
+            \ is.Editing Date Formats:If you need to edit a date for consistency or\
+            \ formatting, ensure you do not alter the original granularity.Maintain\
+            \ the original presentation:Example: October 15 should remain October\
+            \ 15 without a year being added. Final Reminder: Under no circumstances\
+            \ should a year be added to a date that did not originally include one.\n\
+            \n## Time of Day\n1. Format time as \"8 am\" or \"9:30 pm\" (no periods\
+            \ after am/pm).\n```\n\nYou will be provided with content. Do not provided\
+            \ any commentary except for what has been requested. Be concise and specific\
+            \ so the tasks you generate are easy to follow."
+        - id: 7aee35bd-3454-477f-a9ce-bfde822ad0bc
+          role: user
+          text: 'Content
+
+            ```
+
+            {{#1732307467815.content#}}
+
+            ```'
+        selected: false
+        title: Styling
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1744560056630'
+      position:
+        x: 651.0080291291147
+        y: 105.9306472781131
+      positionAbsolute:
+        x: 651.0080291291147
+        y: 105.9306472781131
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            max_tokens: 16384
+            temperature: 0.7
+          mode: chat
+          name: chatgpt-4o-latest
+          provider: openai
+        prompt_template:
+        - id: 83378190-41e4-4ac7-a6ac-b2bab19635ab
+          role: system
+          text: '- As with Formatting Cleaning, ensure that the full and correct HTML
+            structure is included in the final output. Do not omit any part of the
+            HTML document, even if it doesn''t require changes.
+
+            - Only return the content that requires styling adjustments. Sections
+            that already meet the criteria should not be included in the output.
+
+            - Double-check that all HTML tags are correctly closed and the document
+            is fully rendered, preventing any incomplete or broken HTML from being
+            returned. '
+        - id: ec689bcf-ae63-4d34-9e7e-c7c1f60974e4
+          role: user
+          text: '{{#1744560056630.text#}}'
+        selected: false
+        title: STYLING CLEANING
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1744560103943'
+      position:
+        x: 651.0080291291147
+        y: 218.72507636557185
+      positionAbsolute:
+        x: 651.0080291291147
+        y: 218.72507636557185
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 141.9404453436996
+      y: 408.41973953192587
+      zoom: 0.6408239620800993
